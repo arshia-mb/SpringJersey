@@ -3,6 +3,7 @@ package project.SpringApplication.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.SpringApplication.Entity.Customer;
+import project.SpringApplication.Exception.ResourceNotFoundException;
 import project.SpringApplication.Repository.CustomerRepository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class CustomersService {
     }
 
     public Customer findById(Long id){
-        return customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Customer with id:"+id+" was not found!"));
+        return customerRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Customer with id:"+id+" was not found!"));
     }
 
     public Customer save(Customer customer){
