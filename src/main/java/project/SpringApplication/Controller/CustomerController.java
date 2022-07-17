@@ -38,6 +38,33 @@ public class CustomerController {
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
+        customer.setId(customersService.count()+1);
+        return new ResponseEntity<>(customersService.save(customer),HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable (name = "id")Long id){
+        customersService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable (name = "id")Long id,@RequestBody Customer _customer){
+        Customer customer = customersService.findById(id);
+        if(_customer.getWebsite()!=null)
+            customer.setWebsite(_customer.getWebsite());
+        if(_customer.getAddress()!=null)
+            customer.setAddress(_customer.getAddress());
+        if(_customer.getCreditLimit()!=null)
+            customer.setCreditLimit(_customer.getCreditLimit());
+        if(_customer.getName()!=null)
+            customer.setName(_customer.getName());
+        customersService.save(customer);
+        return new ResponseEntity<>(customer.toString(),HttpStatus.OK);
+    }
+
 }
 
 
