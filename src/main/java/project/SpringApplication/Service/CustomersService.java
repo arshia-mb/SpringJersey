@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import project.SpringApplication.Entity.Customer;
 import project.SpringApplication.Repository.CustomerRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -14,6 +15,10 @@ public class CustomersService {
 
     public List<Customer> findAll(){
         return customerRepository.findAll();
+    }
+
+    public List<Customer> findByCreditBetween(BigDecimal c1,BigDecimal c2){
+        return customerRepository.findByCredit(c1, c2);
     }
 
     public Customer findByName(String name){

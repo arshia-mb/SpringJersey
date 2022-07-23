@@ -1,6 +1,8 @@
 package project.SpringApplication.Controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +12,24 @@ import project.SpringApplication.Service.CustomersService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Path("/jrs/customers")
 public class CustomerResource {
     @Autowired
     private CustomersService customersService;
 
+    private static final Logger log = LoggerFactory.getLogger(CustomerResource.class);
+
     @GET
     @Produces("application/json")
     public List<Customer> getAllCustomers(){
+        //long startTime = System.nanoTime();
+        List<Customer> customers = customersService.findAll();
+        //log.info("Time for executing findAll service nano seconds: " + endTime);
         return customersService.findAll();
     }
 
@@ -45,6 +54,19 @@ public class CustomerResource {
     @Produces("application/json")
     public Response getCustomerByName(@PathParam("name")String name) throws URISyntaxException {
         Customer customer = customersService.findByName(name);
+        if(customer == null){
+            return Response.status(404).build();
+        }
+        return Response
+                .status(200)
+                .entity(customer).build();
+    }
+
+    @GET
+    @Path("/credit/between{c1}AND{c2}")
+    @Produces("application/json")
+    public Response getCustomerByCredit(@PathParam("c1") BigDecimal c1,@PathParam("c2")BigDecimal c2) throws URISyntaxException {
+        List<Customer> customer = customersService.findByCreditBetween(c1,c2);
         if(customer == null){
             return Response.status(404).build();
         }
