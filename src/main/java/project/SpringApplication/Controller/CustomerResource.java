@@ -17,19 +17,15 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Path("/jrs/customers")
+@Path("/customers")
 public class CustomerResource {
     @Autowired
     private CustomersService customersService;
 
-    private static final Logger log = LoggerFactory.getLogger(CustomerResource.class);
-
     @GET
     @Produces("application/json")
     public List<Customer> getAllCustomers(){
-        //long startTime = System.nanoTime();
         List<Customer> customers = customersService.findAll();
-        //log.info("Time for executing findAll service nano seconds: " + endTime);
         return customersService.findAll();
     }
 
