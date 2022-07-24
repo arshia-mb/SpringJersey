@@ -13,5 +13,6 @@ public class JerseyConfig extends ResourceConfig {
         register(RegionResource.class);
         register(CountryResource.class);
         register(LocationResource.class);
+        register(WarehouseResource.class);
     }
 }
