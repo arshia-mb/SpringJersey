@@ -6,6 +6,7 @@ import project.SpringApplication.Entity.Location;
 import project.SpringApplication.Entity.Warehouse;
 import project.SpringApplication.Repository.WarehouseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +18,9 @@ public class WarehouseService {
     public Warehouse findById(Long id){
         return warehouseRepository.findById(id).orElseThrow(()->new RuntimeException("Resource not found!"));
     }
-
     public List<Warehouse> findByLocationId(Long id){
         return warehouseRepository.findByLocationId(id);
     }
+    public List<Warehouse> findByIdIn(ArrayList<Long> id){return warehouseRepository.findByIdIn(id);}
+
 }

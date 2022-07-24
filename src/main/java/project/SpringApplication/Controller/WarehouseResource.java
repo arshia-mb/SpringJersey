@@ -8,6 +8,7 @@ import project.SpringApplication.Service.LocationService;
 import project.SpringApplication.Service.WarehouseService;
 
 import javax.ws.rs.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/warehouse")
@@ -26,11 +27,22 @@ public class WarehouseResource {
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public ResponseEntity<?> getId(@PathParam("id") Long id, @DefaultValue("")@QueryParam("val")String val){
-        Warehouse warehouse = warehouseService.findById(id);
-        if (val.equals(""))
-            return new ResponseEntity<>(locationService.findById((warehouse.getLocation().getId())), HttpStatus.OK);
-        return new ResponseEntity<>(warehouse,HttpStatus.OK);
+    public Warehouse getId(@PathParam("id") Long id){
+        return warehouseService.findById(id);
     }
+
+    @GET
+    @Path("/id")
+    @Produces("application/json")
+    public List<Warehouse> getOnes(@PathParam("id") Long id, @DefaultValue("1")@QueryParam("list")String val){
+        String[] words = val.split("n");
+        ArrayList<Long> ids = new ArrayList<>();
+        for(String st:words){
+            ids.add(Long.parseLong(st));
+        }
+        return warehouseService.findByIdIn(ids);
+    }
+
+
 
 }

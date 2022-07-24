@@ -19,7 +19,6 @@ public class Warehouse {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "LOCATION_ID")
-    @JsonIgnore
     private Location location;
 
     public Long getId() {
@@ -46,4 +45,11 @@ public class Warehouse {
         this.location = location;
     }
 
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "id=" + id +
+                ", warehouseName='" + warehouseName + '\'' +
+                '}';
+    }
 }
