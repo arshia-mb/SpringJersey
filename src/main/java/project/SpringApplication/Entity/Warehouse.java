@@ -1,5 +1,6 @@
 package project.SpringApplication.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,6 +19,7 @@ public class Warehouse {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "LOCATION_ID")
+    @JsonIgnore
     private Location location;
 
     public Long getId() {

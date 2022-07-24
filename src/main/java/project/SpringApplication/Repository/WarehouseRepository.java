@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
-    @EntityGraph(attributePaths = {"location.country.region"})
+    //@EntityGraph(attributePaths = {"location.country.region"})
     List<Warehouse> findAll();
 
-    @EntityGraph(attributePaths = {"location.country.region"})
+    //@EntityGraph(attributePaths = {"location.country.region"})
     Optional<Warehouse> findById(Long id);
-    @EntityGraph(attributePaths = {"location.country.region"})
+    //@EntityGraph(attributePaths = {"location.country.region"})
     List<Warehouse> findByLocationId(Long regionId);
 }
