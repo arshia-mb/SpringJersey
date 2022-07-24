@@ -1,5 +1,6 @@
 package project.SpringApplication.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -44,4 +45,11 @@ public class Country {
         this.region = region;
     }
 
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id='" + id + '\'' +
+                ", countryName='" + countryName + '\'' +
+                '}';
+    }
 }

@@ -1,8 +1,10 @@
 package project.SpringApplication.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import project.SpringApplication.Entity.Country;
 import project.SpringApplication.Entity.Customer;
 import project.SpringApplication.Entity.Region;
+import project.SpringApplication.Service.CountryService;
 import project.SpringApplication.Service.RegionService;
 
 import javax.ws.rs.GET;
@@ -15,6 +17,8 @@ import java.util.List;
 public class RegionResource {
     @Autowired
     private RegionService regionService;
+    @Autowired
+    private CountryService countryService;
 
     @GET
     @Produces("application/json")
@@ -35,4 +39,9 @@ public class RegionResource {
     public List<Region> getName(@PathParam("name") String  name){
         return regionService.findByName(name);
     }
+
+    @GET
+    @Path("/{id}/country")
+    @Produces("application/json")
+    public List<Country> getCountry(@PathParam("id")Long id){return countryService.findByRegionId(id);}
 }
