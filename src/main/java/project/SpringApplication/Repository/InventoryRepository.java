@@ -5,4 +5,5 @@ import project.SpringApplication.Entity.Inventory;
 import project.SpringApplication.Entity.InventoryId;
 
 public interface InventoryRepository extends JpaRepository<Inventory, InventoryId> {
+
 }
