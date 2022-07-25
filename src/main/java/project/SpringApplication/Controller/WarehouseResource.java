@@ -1,15 +1,17 @@
 package project.SpringApplication.Controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import project.SpringApplication.DTO.WarehouseDTO;
 import project.SpringApplication.Entity.Warehouse;
 import project.SpringApplication.Service.LocationService;
 import project.SpringApplication.Service.WarehouseService;
 
 import javax.ws.rs.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/warehouse")
 public class WarehouseResource {
@@ -17,11 +19,13 @@ public class WarehouseResource {
     private WarehouseService warehouseService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GET
     @Produces("application/json")
-    public List<Warehouse> getAll(){
-        return warehouseService.findAll();
+    public List<WarehouseDTO> getAll(){
+        return warehouseService.findAll().stream().map(this::convertDTO).collect(Collectors.toList());
     }
 
     @GET
@@ -44,5 +48,17 @@ public class WarehouseResource {
     }
 
 
+    private WarehouseDTO convertDTO(Warehouse warehouse){
+        WarehouseDTO warehouseDTO = modelMapper.map(warehouse,WarehouseDTO.class);
+        return warehouseDTO;
+    }
+
+    private Warehouse convertToEntity(WarehouseDTO warehouseDTO){
+        Warehouse warehouse = modelMapper.map(warehouseDTO,Warehouse.class);
+        if (warehouseDTO.getId() != null) {
+            Warehouse oldPost = warehouseService.findById(warehouseDTO.getId());
+        }
+        return warehouse;
+    }
 
 }
