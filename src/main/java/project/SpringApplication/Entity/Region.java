@@ -1,12 +1,10 @@
 package project.SpringApplication.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "REGIONS")
+@Cacheable
 public class Region {
     @Id
     @Column(name = "REGION_ID", nullable = false)

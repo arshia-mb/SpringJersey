@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "WAREHOUSES")
+@Cacheable
 public class Warehouse {
     @Id
     @Column(name = "WAREHOUSE_ID", nullable = false)
